@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+  </head>
+  <body>
+    <main class="form-page-container">
+      <div class="form-card">
+        <header class="form-card__header">
+          <h2 class="form-card__title">Sign up</h2>
+        </header>
+        <form action="/auth/sign-up" method="post" class="form-interactive">
+          <div
+            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+          >
+            <label for="first-name" class="form-field__label">First name</label>
+            <input type="text" name="first_name" id="first-name" value="<%= locals?.data?.first_name || '' %>" required />
+            <% if (locals.errors?.first_name) { %>
+            <span class="form-field__error-text"><%= errors.first_name.msg %></span>
+            <% } %>
+          </div>
+          <div
+            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+          >
+            <label for="last-name" class="form-field__label">Last name</label>
+            <input type="text" name="last_name" id="last-name" value="<%= locals?.data?.last_name || '' %>" required />
+            <% if (locals.errors?.last_name) { %>
+            <span class="form-field__error-text"><%= errors.last_name.msg %></span>
+            <% } %>
+          </div>
+          <div
+            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+          >
+            <label for="username" class="form-field__label">Username</label>
+            <input type="text" name="username" id="username" value="<%= locals?.data?.username || '' %>" required />
+            <% if (locals.errors?.username) { %>
+            <span class="form-field__error-text"><%= errors.username.msg %></span>
+            <% } %>
+          </div>
+          <div
+            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+          >
+            <label for="password" class="form-field__label">Password</label>
+            <input type="password" name="password" id="password" value="<%= locals?.data?.password || '' %>" required />
+            <% if (locals.errors?.password) { %>
+            <span class="form-field__error-text"><%= errors.password.msg %></span>
+            <% } %>
+          </div>
+          <div
+            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+          >
+            <label for="confirm-password" class="form-field__label"
+              >Confirm password</label
+            >
+            <input
+              type="password"
+              name="confirm_password"
+              id="confirm-password"
+              value="<%= locals?.data?.confirm_password || '' %>"
+              required
+            />
+            <% if (locals.errors?.confirm_password) { %>
+            <span class="form-field__error-text"><%= errors.confirm_password.msg %></span>
+            <% } %>
+          </div>
+          <div class="form-actions">
+          <button type="submit" class="btn btn--primary">Submit</button>
+        </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
