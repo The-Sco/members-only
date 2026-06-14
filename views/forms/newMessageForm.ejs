@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in</title>
+  </head>
+  <body>
+    <%- include("../partials/header") %>
+    <main class="form-page-container">
+      <div class="form-card">
+        <header class="form-card__header">
+          <h2 class="form-card__title">Create new post</h2>
+        </header>
+        <form action="/messages/new" method="post" class="form-interactive">
+          <div
+            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+          >
+            <label for="title" class="form-field__label">Title</label>
+            <input type="text" name="title" id="title" value="<%= locals?.data?.title || '' %>" autocomplete="off" required />
+            <% if (locals.errors?.title) { %>
+            <span class="form-field__error-text"><%= errors.title.msg %></span>
+            <% } %>
+          </div>
+          <div
+            class="form-field <%= (locals.errors?.password) ? 'form-field--error' : '' %>"
+          >
+            <label for="text" class="form-field__label">Text</label>
+            <textarea name="text" id="text" required>
+              <%= locals.data?.text %>
+            </textarea>
+            <% if (locals.errors?.text) { %>
+            <span class="form-field__error-text"><%= errors.text.msg %></span>
+            <% } %>
+          </div>
+          <div class="form-actions">
+          <button type="submit" class="btn btn--primary">Submit</button>
+        </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

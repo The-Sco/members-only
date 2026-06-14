@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My posts</title>
+  </head>
+  <body>
+    <%- include("../partials/header") %>
+    <div class="page-title-wrapper">
+      <h2 class="page-title">My posts</h2>
+    </div>
+    <div class="<%= (isEmpty) ? 'posts-grid--empty' : 'posts-grid' %>">
+      <% if (isEmpty) { %>   
+          <p class="message">You haven't written any posts yet.</p>
+        <% } else { %>
+          <% posts.forEach(post => { %>
+            <%- include("../partials/post", { post, isMyPost: true }) %>
+          <% }) %>
+        <% } %>
+      </div>
+  </body>
+</html>

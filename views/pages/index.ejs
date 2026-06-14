@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+  </head>
+  <body>
+    <%- include("../partials/header") %>
+    <div class="page-title-wrapper">
+      <h2 class="page-title">Posts</h2>
+    </div>
+    <% if (locals.posts) { %>
+      <div class="<%= isEmpty ? 'products-grid--empty' : 'products-grid' %>">
+        <% if (isEmpty) { %>
+          <p class="message">There is no posts yet. Be the first!</p>
+        <% } else { %>
+          <% posts.forEach(post => { %>
+            <%- include("../partials/post", {post}) %>
+          <% }) %>
+        <% } %>
+      </div>
+    <% } %>
+  </body>
+</html>

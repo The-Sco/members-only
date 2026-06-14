@@ -6,14 +6,16 @@
     <title>Sign up</title>
   </head>
   <body>
+    <%- include("../partials/header") %>
     <main class="form-page-container">
       <div class="form-card">
         <header class="form-card__header">
           <h2 class="form-card__title">Sign up</h2>
+          <p class="form-card__sub-title">Or <a href="/auth/log-in">log in to your existing account</a></p>
         </header>
         <form action="/auth/sign-up" method="post" class="form-interactive">
           <div
-            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+            class="form-field <%= (locals.errors?.first_name) ? 'form-field--error' : '' %>"
           >
             <label for="first-name" class="form-field__label">First name</label>
             <input type="text" name="first_name" id="first-name" value="<%= locals?.data?.first_name || '' %>" required />
@@ -22,7 +24,7 @@
             <% } %>
           </div>
           <div
-            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+            class="form-field <%= (locals.errors?.last_name) ? 'form-field--error' : '' %>"
           >
             <label for="last-name" class="form-field__label">Last name</label>
             <input type="text" name="last_name" id="last-name" value="<%= locals?.data?.last_name || '' %>" required />
@@ -31,7 +33,7 @@
             <% } %>
           </div>
           <div
-            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+            class="form-field <%= (locals.errors?.username) ? 'form-field--error' : '' %>"
           >
             <label for="username" class="form-field__label">Username</label>
             <input type="text" name="username" id="username" value="<%= locals?.data?.username || '' %>" required />
@@ -40,7 +42,7 @@
             <% } %>
           </div>
           <div
-            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+            class="form-field <%= (locals.errors?.password) ? 'form-field--error' : '' %>"
           >
             <label for="password" class="form-field__label">Password</label>
             <input type="password" name="password" id="password" value="<%= locals?.data?.password || '' %>" required />
@@ -49,7 +51,7 @@
             <% } %>
           </div>
           <div
-            class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>"
+            class="form-field <%= (locals.errors?.confirm_password) ? 'form-field--error' : '' %>"
           >
             <label for="confirm-password" class="form-field__label"
               >Confirm password</label
