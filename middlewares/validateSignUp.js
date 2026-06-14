@@ -1,27 +1,28 @@
 const { body } = require("express-validator");
 
-const validateProduct = [
+const validateSignUp = [
   body("first_name")
     .trim()
     .notEmpty()
     .withMessage("First name can not be blank")
+    .isAlpha()
+    .withMessage("Invalid name")
     .isLength({ min: 3 })
-    .withMessage("First name must be at least 3 characters long")
-    .escape(),
+    .withMessage("First name must be at least 3 characters long"),
   body("last_name")
     .trim()
     .notEmpty()
     .withMessage("Last name can not be blank")
+    .isAlpha()
+    .withMessage("Invalid name")
     .isLength({ min: 3 })
-    .withMessage("Last name must be at least 3 characters long")
-    .escape(),
+    .withMessage("Last name must be at least 3 characters long"),
   body("username")
     .trim()
     .notEmpty()
     .withMessage("Username can not be blank")
     .isLength({ min: 3, max: 24 })
-    .withMessage("Username must be between 3 and 24 characters")
-    .escape(),
+    .withMessage("Username must be between 3 and 24 characters"),
   body("password")
     .trim()
     .notEmpty()
@@ -40,4 +41,4 @@ const validateProduct = [
     }),
 ];
 
-module.exports = validateProduct;
+module.exports = validateSignUp;

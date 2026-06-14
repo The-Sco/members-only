@@ -6,7 +6,10 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const pool = require("./db/pool");
-const authRouter = require("./routes/authentication");
+
+const authRouter = require("./routes/authRoute");
+const messagesRouter = require("./routes/messagesRoute");
+const joinRouter = require("./routes/joinRoute");
 
 const app = express();
 const port = 3000;
@@ -22,6 +25,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// passport.js set up
 app.use(
   session({
     store: new pgSession({ pool: pool, tableName: "session" }),
@@ -44,12 +48,16 @@ passport.use(
       const user = rows[0];
 
       if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+        return done(null, false, {
+          username: { msg: "Incorrect username" },
+        });
       }
 
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        return done(null, false, { message: "Incorrect password" });
+        return done(null, false, {
+          password: { msg: "Incorrect password" },
+        });
       }
       return done(null, user);
     } catch (err) {
@@ -75,11 +83,25 @@ passport.deserializeUser(async (id, done) => {
 });
 
 app.use((req, res, next) => {
+  res.locals.isAuth = req.user ? true : false;
   res.locals.currentUser = req.user;
+
+  if (req.user) {
+    res.locals.isMember = req.user.is_member;
+    res.locals.isAdmin = req.user.is_admin;
+  }
   next();
 });
 
+// app.use((req, res, next) => {
+//   console.log(req.user);
+//   next();
+// });
+
 app.get("/", (req, res) => {
-  res.render("index");
+  return res.redirect("/messages");
 });
+
 app.use("/auth", authRouter);
+app.use("/messages", messagesRouter);
+app.use("/join", joinRouter);
