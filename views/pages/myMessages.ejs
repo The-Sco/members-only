@@ -29,7 +29,7 @@
           <% if (isEmpty) { %>
 
             <div class="empty-state-card">
-              <div class="empty-state-card__icon"><%= emoji %></div>
+              <div class="empty-state-card__icon" aria-hidden="true"><%= emoji %></div>
               <p class="empty-state-card__message"><%= message %></p>
               <a 
                 href="<%= locals.isAuth ? '/messages/new' : '/auth/log-in' %>" 

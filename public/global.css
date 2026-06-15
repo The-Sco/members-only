@@ -17,9 +17,6 @@
   --color-success: #56d364;
   --color-success-bg: rgba(86, 211, 100, 0.1);
 
-  --border-glow-step-1: rgba(103, 218, 109, 0.1);
-  --border-glow-step-2: rgba(103, 218, 109, 0.3);
-
   --font-body:
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-heading: "Inter", system-ui, sans-serif;

@@ -19,16 +19,30 @@
 }
 
 .auth-card.secret {
+  animation: backgroundGlow 3s ease-in-out infinite;
+}
+
+.auth-card.secret button {
   animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes backgroundGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 180px -30px rgba(103, 218, 109, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 180px -30px rgba(103, 218, 109, 0.1);
+  }
 }
 
 @keyframes borderGlow {
   0%,
   100% {
-    box-shadow: 0 0 10px var(--border-glow-step-1);
+    box-shadow: 0 0 20px rgba(103, 218, 109, 0.3);
   }
   50% {
-    box-shadow: 0 0 30px var(--border-glow-step-2);
+    box-shadow: 0 0 40px rgba(103, 218, 109, 0.1);
   }
 }
 
@@ -128,15 +142,10 @@
 }
 
 @media (max-width: 480px) {
-  .auth-card {
-    padding: unset;
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
-    animation: unset !important;
+  .auth-page-container {
+    padding: 1.5rem;
   }
-
-  .auth-card.secret button {
-    animation: borderGlow 3s ease-in-out infinite;
+  .auth-card {
+    padding: 1rem;
   }
 }

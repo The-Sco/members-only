@@ -79,11 +79,12 @@
 
 .post-card__title-link {
   color: var(--color-text-main);
-  text-decoration: none;
+  text-decoration: underline;
 }
-
+.post-card__title-link:hover,
 .post-card__title-link:hover .post-card__title {
   color: var(--color-accent);
+  text-decoration: none;
 }
 
 .post-card__title {
@@ -95,10 +96,11 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
   transition: color var(--transition-fast);
 }
 
-.post-card__text {
+.post-card__title .post-card__text {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   line-height: 1.6;
