@@ -4,9 +4,6 @@ const messagesDb = require("../db/queries/messagesQueries");
 
 async function messagesGet(req, res, next) {
   try {
-    if (!req.user) {
-      return res.redirect("/auth/log-in");
-    }
     const posts = await messagesDb.getAllMessages(req.user?.is_member || false);
     res.render("pages/index", { posts, isEmpty: posts.length === 0 });
   } catch (err) {
@@ -16,12 +13,12 @@ async function messagesGet(req, res, next) {
 
 async function singleMessageGet(req, res, next) {
   try {
-    if (!req.user) {
-      return res.redirect("/auth/log-in");
-    }
     const { id } = req.params;
-    const post = await messagesDb.getSingleMessage(id, req.user.is_member);
-    const isMyPost = post.id === req.user.id;
+    const post = await messagesDb.getSingleMessage(
+      id,
+      req.user?.is_member || false,
+    );
+    const isMyPost = post.id === req.user?.id || false;
     res.render("pages/singlePost", { post, isMyPost });
   } catch (err) {
     next(err);
@@ -31,11 +28,13 @@ async function singleMessageGet(req, res, next) {
 function newMessageGet(req, res, next) {
   try {
     if (!req.user) {
+      req.flash("notification", {
+        success: false,
+        msg: "You You need to log in to create new posts! 🤫",
+      });
       return res.redirect("/auth/log-in");
     }
-    if (!req.user) {
-      return res.redirect("/auth/log-in");
-    }
+
     res.render("forms/newMessageForm");
   } catch (err) {
     next(err);
@@ -56,6 +55,11 @@ const newMessagePost = [
       const { title, text } = req.body;
       const user_id = req.user.id;
       await messagesDb.newMessage(user_id, title, text);
+      req.flash("notification", {
+        success: true,
+        msg: "Published!",
+      });
+
       res.redirect("/messages");
     } catch (err) {
       next(err);
@@ -65,11 +69,15 @@ const newMessagePost = [
 
 async function myMessagesGet(req, res, next) {
   try {
-    if (!req.user) {
-      return res.redirect("/auth/log-in");
+    if (req.user) {
+      const posts = await messagesDb.getUserMessages(req.user.id);
+      return res.render("pages/myMessages", {
+        posts,
+        isEmpty: posts.length === 0,
+      });
+    } else {
+      return res.render("pages/myMessages", { isEmpty: true });
     }
-    const posts = await messagesDb.getUserMessages(req.user.id);
-    res.render("pages/myMessages", { posts, isEmpty: posts.length === 0 });
   } catch (err) {
     next(err);
   }
@@ -79,6 +87,10 @@ async function deleteMessagePost(req, res, next) {
   try {
     const { id } = req.params;
     await messagesDb.deleteMessagePost(id);
+    req.flash("notification", {
+      success: true,
+      msg: `Deleted!`,
+    });
     res.redirect("/messages");
   } catch (err) {
     next(err);

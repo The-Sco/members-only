@@ -3,40 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log in</title>
+    <title>Log in | SecretClub</title>
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/elements/header.css">
+    <link rel="stylesheet" href="/forms/form.css">
   </head>
   <body>
+    
     <%- include("../partials/header") %>
-    <main class="form-page-container">
-      <div class="form-card">
-        <header class="form-card__header">
-          <h2 class="form-card__title">Log in to your account</h2>
-          <p class="form-card__sub-title">Or <a href="/auth/sign-up">sign up for a new account</a></p>
+
+    <main class="auth-page-container">
+      <div class="auth-card">
+        
+        <header class="auth-card__header">
+          <h2 class="auth-card__title">Welcome Back</h2>
+          <p class="auth-card__subtitle">
+            Don't have an account yet? <a href="/auth/sign-up" class="auth-card__link">Sign up</a>
+          </p>
         </header>
-        <form action="/auth/log-in" method="post" class="form-interactive">
-          <div
-            class="form-field <%= (locals.errors?.username) ? 'form-field--error' : '' %>"
-          >
+
+        <form action="/auth/log-in" method="POST" class="auth-form">
+          
+          <div class="form-field <%= (locals.errors?.username) ? 'form-field--error' : '' %>">
             <label for="username" class="form-field__label">Username</label>
             <input type="text" name="username" id="username" value="<%= locals?.data?.username || '' %>" required />
             <% if (locals.errors?.username) { %>
-            <span class="form-field__error-text"><%= errors.username.msg %></span>
+              <span class="form-field__error-text"><%= errors.username.msg %></span>
             <% } %>
           </div>
-          <div
-            class="form-field <%= (locals.errors?.password) ? 'form-field--error' : '' %>"
-          >
+
+          <div class="form-field <%= (locals.errors?.password) ? 'form-field--error' : '' %>">
             <label for="password" class="form-field__label">Password</label>
-            <input type="password" name="password" id="password" value="<%= locals?.data?.password || '' %>" required />
+            <input type="password" name="password" id="password" placeholder="••••••••" required />
             <% if (locals.errors?.password) { %>
-            <span class="form-field__error-text"><%= errors.password.msg %></span>
+              <span class="form-field__error-text"><%= errors.password.msg %></span>
             <% } %>
           </div>
-          <div class="form-actions">
-          <button type="submit" class="btn btn--primary">Submit</button>
-        </div>
+
+          <div class="auth-form__actions">
+            <button type="submit" class="btn btn--primary">Log In</button>
+          </div>
+
         </form>
       </div>
     </main>
+
   </body>
 </html>

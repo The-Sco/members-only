@@ -18,12 +18,25 @@ const signUpPost = [
   validateSignUpForm,
   async (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.render("forms/signUp", { errors: errors.mapped(), data: req.body });
+    const doesExsist = await authDb.checkIfUserExists(req.body.username);
+    if (!errors.isEmpty() || doesExsist) {
+      let mapped = errors.mapped();
+
+      if (doesExsist) {
+        mapped = {
+          ...mapped,
+          username: {
+            value: mapped.username?.value || "",
+            msg: "User already exists",
+          },
+        };
+      }
+      res.render("forms/signUp", { errors: mapped, data: req.body });
       return;
     }
 
     const { first_name, last_name, username, password } = req.body;
+
     const user = await authDb.newUser(
       first_name,
       last_name,
@@ -32,10 +45,14 @@ const signUpPost = [
     );
 
     req.login(user, (err) => {
+      req.flash("notification", {
+        success: true,
+        msg: `Successful registration as @${username}`,
+      });
       if (err) {
         return next(err);
       }
-      return res.redirect("/");
+      return res.redirect("/messages");
     });
   },
 ];
@@ -65,7 +82,11 @@ function logInPost(req, res, next) {
 
     req.login(user, (loginErr) => {
       if (loginErr) return next(loginErr);
-      return res.redirect("/");
+      req.flash("notification", {
+        success: true,
+        msg: `Successful login as @${req.body.username}`,
+      });
+      return res.redirect("/messages");
     });
   })(req, res, next);
 }
@@ -82,7 +103,7 @@ function logOutGet(req, res, next) {
       }
 
       res.clearCookie("connect.sid");
-      res.redirect("/");
+      res.redirect("/messages");
     });
   });
 }

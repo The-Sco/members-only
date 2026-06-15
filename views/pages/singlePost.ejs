@@ -1,5 +1,5 @@
 <%
-  const isMyPost = locals.currentUser.id === post.user_id;
+  const isMyPost = locals.currentUser?.id === post.user_id;
   const fullName = locals.isMember ? `${post.first_name} ${post.last_name}` : "-";
   const username = locals.isMember ? post.username : "anon";
 %>
@@ -9,42 +9,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= post.title %></title>
+    <title><%= post.title %> | SecretClub</title>
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/elements/header.css">
+    <link rel="stylesheet" href="/elements/singlePost.css">
   </head>
   <body>
+    
     <%- include("../partials/header") %>
-    <main class="page-container">
-      <a href="#" onclick="history.back(); return false;" class="back-link">
-        ← Back
+
+    <main class="post-page-container">
+      
+      <a href="#" onclick="history.back(); return false;" class="back-navigation">
+        ← Back to feed
       </a>
-      <div class="single-post__header">
-        <h2 class="single-post__title"><%= post.title %></h2>
-        <div class="single-post__full-name">
-          <span>
-            <%= isMyPost ? (locals.currentUser.first_name + '' + locals.currentUser.last_name) : fullName %>
-          </span>
+
+      <article class="single-post">
+        
+        <header class="single-post__header">
+          <h1 class="single-post__title"><%= post.title %></h1>
+          
+          <div class="single-post__meta">
+            <div class="single-post__author">
+              <span class="single-post__fullname">
+                <%= isMyPost ? (locals.currentUser.first_name + ' ' + locals.currentUser.last_name) : fullName %>
+              </span>
+              <span class="single-post__username">
+                @<%= isMyPost ? locals.currentUser.username : username %>
+              </span>
+            </div>
+            
+            <div class="single-post__date">
+              <time datetime="<%= post.timestamp %>">
+                <%= new Date(post.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+              </time>
+            </div>
+          </div>
+        </header>
+
+        <div class="single-post__body">
+          <p class="single-post__text"><%= post.text %></p>
         </div>
-        <div class="single-post__username">
-          @<%= isMyPost ? locals.currentUser.username : username %>
-        </div>
-        <div class="single-post__date">
-          <span>
-            <%= post.timestamp %>
-          </span>
-        </div>
-      </div>
-      <div class="single-post__content">
-        <p class="single-post__text">
-          <%= post.text %>
-        </p>
-      </div>
-      <% if (isMyPost || locals.isAdmin) { %>
-        <div class="single-post__actions">
-          <form action="/messages/single<%= post.id %>/delete" method="post">
-            <button type="submit" class="btn btn--danger" onclick="return confirm('Are you sure you want to delete this post?');">Delete</button>
-          </form>
-        </div>
-      <% } %>
+
+        <% if (isMyPost || locals.isAdmin) { %>
+          <footer class="single-post__footer">
+            <form action="/messages/single/<%= post.id %>/delete" method="POST" class="single-post__delete-form">
+              <button type="submit" class="btn btn--danger btn--compact" onclick="return confirm('Delete this secret forever? ;o');">
+                Delete Post
+              </button>
+            </form>
+          </footer>
+        <% } %>
+
+      </article>
+
     </main>
   </body>
 </html>

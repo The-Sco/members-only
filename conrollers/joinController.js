@@ -3,6 +3,10 @@ const joinDb = require("../db/queries/joinQueries");
 function joinGet(req, res, next) {
   try {
     if (!req.user) {
+      req.flash("notification", {
+        success: false,
+        msg: `You You need to log in to become a member 🤔`,
+      });
       return res.redirect("/auth/log-in");
     }
     if (req.user.is_member) {
@@ -26,10 +30,18 @@ async function joinPost(req, res, next) {
 
     if (code === process.env.SECRET_CODE) {
       await joinDb.setMember(req.user.id);
+      req.flash("notification", {
+        success: true,
+        msg: `You are now a member!`,
+      });
       return res.redirect("/messages");
     }
     if (code === process.env.ADMIN_CODE) {
       await joinDb.setAdmin(req.user.id);
+      req.flash("notification", {
+        success: true,
+        msg: `You are now an admin!`,
+      });
       return res.redirect("/messages");
     }
 

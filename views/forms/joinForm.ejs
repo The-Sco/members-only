@@ -3,30 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log in</title>
+    <title>Join the Club | SecretClub</title>
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/elements/header.css">
+    <link rel="stylesheet" href="/forms/form.css">
   </head>
   <body>
+    
     <%- include("../partials/header") %>
-    <main class="form-page-container">
-      <div class="form-card">
-        <header class="form-card__header">
-          <h2 class="form-card__title">Join the club</h2>
+
+    <main class="auth-page-container">
+      <div class="auth-card secret">
+        
+        <header class="auth-card__header">
+          <h2 class="auth-card__title">Join the Club</h2>
+          <p class="auth-card__subtitle">Enter the secret passcode to unlock author names and creation dates</p>
         </header>
-        <form action="/join" method="post" class="form-interactive">
-          <div
-            class="form-field <%= (locals.error) ? 'form-field--error' : '' %>"
-          >
-            <label for="code" class="form-field__label">Enter secret code</label>
-            <input type="text" name="code" id="code" value="<%= locals.error?.value || '' %>" autocomplete="off" required />
+
+        <form action="/join" method="POST" class="auth-form">
+          
+          <div class="form-field <%= (locals.error) ? 'form-field--error' : '' %>">
+            <label for="code" class="form-field__label">Secret Passcode</label>
+            <input type="text" name="code" id="code" placeholder="super secret code &lt;3" autocomplete="off" required />
+            
             <% if (locals.error) { %>
-            <span class="form-field__error-text"><%= error.msg %></span>
+              <span class="form-field__error-text"><%= error.msg %></span>
             <% } %>
           </div>
-          <div class="form-actions">
-          <button type="submit" class="btn btn--primary">Submit</button>
+
+          <div class="auth-form__actions">
+            <button type="submit" class="btn btn--primary">Verify Code</button>
           </div>
+
         </form>
       </div>
     </main>
+
   </body>
 </html>

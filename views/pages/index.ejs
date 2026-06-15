@@ -3,23 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Home | SecretClub ;3</title>
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/elements/header.css">
+    <link rel="stylesheet" href="/elements/postCard.css">
+    <link rel="stylesheet" href="/elements/posts-grid.css">
   </head>
   <body>
+    
     <%- include("../partials/header") %>
-    <div class="page-title-wrapper">
-      <h2 class="page-title">Posts</h2>
-    </div>
-    <% if (locals.posts) { %>
-      <div class="<%= isEmpty ? 'products-grid--empty' : 'products-grid' %>">
-        <% if (isEmpty) { %>
-          <p class="message">There is no posts yet. Be the first!</p>
-        <% } else { %>
-          <% posts.forEach(post => { %>
-            <%- include("../partials/post", {post}) %>
-          <% }) %>
-        <% } %>
-      </div>
-    <% } %>
+
+    <main class="feed-container">
+      
+      <header class="feed-header">
+        <h2 class="feed-header__title">Club Feed</h2>
+        <p class="feed-header__subtitle">Explore secrets shared by community members</p>
+      </header>
+
+      <% if (locals.posts) { %>
+        <div class="posts-grid <%= isEmpty ? 'posts-grid--empty' : '' %>">
+          
+          <% if (isEmpty) { %>
+            <div class="empty-state-card">
+              <div class="empty-state-card__icon">🤫</div>
+              <p class="empty-state-card__message">There are no posts yet. Be the first to share a secret!</p>
+              <a href="/messages/new" class="btn btn--primary empty-state-card__btn">Create New Post</a>
+            </div>
+          <% } else { %>
+            
+            <% posts.forEach(post => { %>
+              <%- include("../partials/post", {post}) %>
+            <% }) %>
+            
+          <% } %>
+
+        </div>
+      <% } %>
+
+    </main>
+
   </body>
 </html>

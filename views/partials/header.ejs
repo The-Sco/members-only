@@ -1,46 +1,48 @@
 <% const links = [ 
-  {
-    title: "Home",
-    url: "/messages",
-  },
-  {
-    title: "Join",
-    url: "/join",
-  },
-  {
-    title: "My posts",
-    url: "/messages/me",
-  },
-  {
-    title: "New post",
-    url: "/messages/new",
-  }
+  { title: "Home", url: "/messages" },
+  { title: "Join", url: "/join" },
+  { title: "My posts", url: "/messages/me" },
+  { title: "New post", url: "/messages/new" }
 ]; 
   const user = locals?.currentUser;
-  const role = user?.isAdmin ? "Admin" : (user?.isMember ? "Member" : "Guest");
+  const role = user?.is_admin ? "Admin" : (user?.is_member ? "Member" : "Guest");
 %>
 
-<header class="page-header">
-  <h1 class="page-header__logo">Secret</h1>
-  <nav class="page-header__nav">
-    <ul class="page-header__links-list">
-      <% links.forEach(l => { %>
-        <li class="page-header__link">
-          <a href="<%= l.url %>"><%= l.title %></a>
-        </li>
-      <% }); %>
-    </ul>
-    <div class="page-header__actions">
-      <% if (!locals.isAuth) { %>
-        <a href="/auth/log-in" class="btn btn--primary">Log in</a>
-        <a href="/auth/sign-up" class="btn btn--primary">Sign up</a>
+<header class="site-header">
+  <div class="site-header__container">
+    
+    <a href="/messages" class="site-header__logo">
+      Secret<span>Club</span>
+    </a>
+
+    <nav class="site-header__nav">
+      <ul class="site-header__menu">
+        <% links.forEach(l => { %>
+          <li class="site-header__menu-item">
+            <a href="<%= l.url %>" class="site-header__menu-link"><%= l.title %></a>
+          </li>
+        <% }); %>
+      </ul>
+      
+      <div class="site-header__actions">
+        <% if (!user) { %>
+          <a href="/auth/log-in" class="btn-link">Log in</a>
+          <a href="/auth/sign-up" class="btn btn--primary btn--compact">Sign up</a>
         <% } else { %>
-          <div class="page-header__user-info">
-            <span class="page-header__username">@<%= locals.currentUser.username %></span>
-            <span class="page-header__role"><%= role %></span>
+          <div class="user-badge">
+            <div class="user-badge__info">
+              <span class="user-badge__username">@<%= user.username %></span>
+              <span class="user-badge__role user-badge__role--<%= role.toLowerCase() %>"><%= role %></span>
+            </div>
           </div>
-          <a href="/auth/log-out" class="btn btn--danger" onclick="return confirm('Are you sure you want to log out?');">Log out</a>
+          <a href="/auth/log-out" class="btn btn--danger btn--compact" onclick="return confirm('Log out from SecretClub? ;3');">Log out</a>
         <% } %>
       </div>
-  </nav>
+    </nav>
+
+  </div>
 </header>
+
+<% if (locals.notification) { %>
+  <%- include("./notification") %>
+<% } %>

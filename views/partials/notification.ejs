@@ -1,0 +1,41 @@
+<% 
+  const isSuccess = locals.notification?.success;
+  const emoji = isSuccess ? '✅' : '🚨'; 
+  const title = isSuccess ? 'Success' : "Error";
+%>
+
+<% if (locals.notification) { %>
+  <div id="notification" class="toast toast--<%= isSuccess ? 'success' : 'error' %>">
+    
+    <div class="toast__progress"></div>
+
+    <header class="toast__header">
+      <div class="toast__meta">
+        <span class="toast__emoji"><%= emoji %></span>
+        <h5 class="toast__title"><%= title %></h5>
+      </div>
+      <button class="toast__close-btn" type="button" onclick="dismiss()">&times;</button>
+    </header>
+      <div class="toast__body">
+        <p class="toast__text"><%= locals.notification.msg %></p>
+      </div>
+  </div>
+
+  <script>
+    function dismiss() {
+      const notification = document.querySelector("#notification");
+      if (!notification) return;
+      
+      notification.classList.add("toast--fade-out");
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }
+
+    if (document.querySelector("#notification")) {
+      setTimeout(() => {
+        dismiss();
+      }, 4000); 
+    }
+  </script>
+<% } %>

@@ -1,4 +1,5 @@
 const express = require("express");
+const flash = require("connect-flash");
 const path = require("path");
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
@@ -6,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const pool = require("./db/pool");
+const errorHandler = require("./middlewares/errorHandler");
 
 const authRouter = require("./routes/authRoute");
 const messagesRouter = require("./routes/messagesRoute");
@@ -82,21 +84,20 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+app.use(flash());
 app.use((req, res, next) => {
-  res.locals.isAuth = req.user ? true : false;
   res.locals.currentUser = req.user;
-
-  if (req.user) {
-    res.locals.isMember = req.user.is_member;
-    res.locals.isAdmin = req.user.is_admin;
-  }
+  res.locals.notification = req.flash("notification")[0];
   next();
 });
 
-// app.use((req, res, next) => {
-//   console.log(req.user);
-//   next();
-// });
+app.use((req, res, next) => {
+  res.locals.isAuth = req.user ? true : false;
+  res.locals.currentUser = req.user;
+  res.locals.isMember = req.user?.is_member || false;
+  res.locals.isAdmin = req.user?.is_admin || false;
+  next();
+});
 
 app.get("/", (req, res) => {
   return res.redirect("/messages");
@@ -105,3 +106,4 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/messages", messagesRouter);
 app.use("/join", joinRouter);
+app.use(errorHandler);

@@ -1,24 +1,24 @@
 <% 
   const fullName = (locals.isMember || locals.isMyPost) ? `${post.first_name} ${post.last_name}` : "-";
   const username = (locals.isMember || locals.isMyPost) ? post.username : "anon";
+  const isAnon = username === 'anon';
 %>
 
+<article class="post-card <%= isAnon ? 'post-card--anon' : 'post-card--member' %>">
+  
+  <header class="post-card__header">
+    <div class="post-card__author">
+      <h4 class="post-card__fullname"><%= fullName %></h4>
+      <span class="post-card__username">@<%= username %></span>
+    </div>
+    <span class="post-card__status" title="<%= isAnon ? 'Anonymous Guest' : 'Club Member' %>"></span>
+  </header>
+  
+  <div class="post-card__content">
+    <a href="/messages/single/<%= post.id %>" class="post-card__title-link">
+      <h3 class="post-card__title"><%= post.title %></h3>
+    </a>
+    <p class="post-card__text"><%= post.text %></p>
+  </div>
 
-<article class="post">
-  <a href="/messages/single/<%= post.id %>">
-    <div class="post__header">
-      <h3 class="post__title"><%= post.title %></h3>
-      <div class="post__full-name-wrapper">
-      <span class="post__full-name">
-        <%= fullName %> 
-      </span>
-      </div>
-      <div class="post__username-wrapper">
-        <span class="post__username">@<%= username %></span>
-      </div>
-    </div>
-    <div class="post__text-wrapper">
-      <p class="post__text"><%= post.text %></p>
-    </div>
-  </a>
 </article>
