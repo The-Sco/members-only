@@ -202,7 +202,7 @@
   }
 }
 
-@media (max-width: 409px) {
+@media (max-width: 370px) {
   .site-header__container {
     display: flex;
     flex-direction: column;
