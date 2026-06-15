@@ -30,7 +30,7 @@ function newMessageGet(req, res, next) {
     if (!req.user) {
       req.flash("notification", {
         success: false,
-        msg: "You You need to log in to create new posts! 🤫",
+        msg: "You need to log in to create new posts! 🤫",
       });
       return res.redirect("/auth/log-in");
     }

@@ -5,7 +5,7 @@ function joinGet(req, res, next) {
     if (!req.user) {
       req.flash("notification", {
         success: false,
-        msg: `You You need to log in to become a member 🤔`,
+        msg: `You need to log in to become a member 🤔`,
       });
       return res.redirect("/auth/log-in");
     }
