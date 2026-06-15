@@ -2,6 +2,9 @@
 
 A full-stack, secure, invitation-based message board application built with Node.js, Express, and PostgreSQL. This project is part of **The Odin Project** curriculum and focuses on implementing secure user authentication, role-based access control, and clean relational database management.
 
+Live Demo: _[https://secret-club.onrender.com]_
+
+
 ---
 
 ## Features
