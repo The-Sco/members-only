@@ -26,21 +26,32 @@ function joinGet(req, res, next) {
 
 async function joinPost(req, res, next) {
   try {
+    const { id } = req.user;
     const { code } = req.body;
 
     if (code === process.env.SECRET_CODE) {
-      await joinDb.setMember(req.user.id);
+      await joinDb.setMember(id);
       req.flash("notification", {
         success: true,
         msg: `You are now a member!`,
       });
       return res.redirect("/messages");
     }
+
     if (code === process.env.ADMIN_CODE) {
-      await joinDb.setAdmin(req.user.id);
+      await joinDb.setAdmin(id);
       req.flash("notification", {
         success: true,
         msg: `You are now an admin!`,
+      });
+      return res.redirect("/messages");
+    }
+
+    if (code === "reset") {
+      await joinDb.reset(id);
+      req.flash("notification", {
+        success: true,
+        msg: `Successful reset!`,
       });
       return res.redirect("/messages");
     }

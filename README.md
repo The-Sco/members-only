@@ -4,6 +4,13 @@ A full-stack, secure, invitation-based message board application built with Node
 
 Live Demo: _[https://secret-club.onrender.com]_
 
+---
+
+## Secret codes
+
+- **To become a member:** `aboba`
+- **To become an admin:** `i_am_admin`
+- **To reset your role:** `reset`
 
 ---
 
