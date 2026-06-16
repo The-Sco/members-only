@@ -29,10 +29,10 @@
 @keyframes backgroundGlow {
   0%,
   100% {
-    box-shadow: 0 0 180px -30px rgba(103, 218, 109, 0.3);
+    box-shadow: 0 0 180px -30px rgba(103, 218, 109, 0.4);
   }
   50% {
-    box-shadow: 0 0 180px -30px rgba(103, 218, 109, 0.1);
+    box-shadow: 0 0 180px -30px rgba(103, 218, 109, 0.2);
   }
 }
 
