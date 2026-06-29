@@ -1,5 +1,7 @@
-const router = require("express").Router();
-const controller = require("../conrollers/messagesConroller");
+import * as express from "express";
+import * as controller from "../conrollers/messagesConroller.js";
+
+const router = express.Router();
 
 router.get("/", controller.messagesGet);
 router.get("/single/:id", controller.singleMessageGet);
@@ -8,4 +10,4 @@ router.get("/me", controller.myMessagesGet);
 router.get("/new", controller.newMessageGet);
 router.post("/new", controller.newMessagePost);
 
-module.exports = router;
+export default router;

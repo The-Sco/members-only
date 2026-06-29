@@ -1,28 +1,43 @@
-const pool = require("../pool");
+import prisma from "../pool.js";
 
 async function setMember(id) {
-  await pool.query("UPDATE users SET is_member = true WHERE id = $1", [id]);
+  await prisma.users.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      is_member: true,
+    },
+  });
+
   return;
 }
 
 async function setAdmin(id) {
-  await pool.query(
-    "UPDATE users SET is_admin = true, is_member = true WHERE id = $1",
-    [id],
-  );
+  await prisma.users.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      is_admin: true,
+    },
+  });
+
   return;
 }
 
 async function reset(id) {
-  await pool.query(
-    "UPDATE users SET is_admin = false, is_member = false WHERE id = $1",
-    [id],
-  );
+  await prisma.users.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      is_admin: false,
+      is_member: false,
+    },
+  });
+
   return;
 }
 
-module.exports = {
-  setAdmin,
-  setMember,
-  reset,
-};
+export { setAdmin, setMember, reset };

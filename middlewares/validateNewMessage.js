@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
 const validateNewMessage = [
   body("title")
@@ -10,4 +10,4 @@ const validateNewMessage = [
   body("text").trim().notEmpty().withMessage("Message cannot be blank"),
 ];
 
-module.exports = validateNewMessage;
+export default validateNewMessage;

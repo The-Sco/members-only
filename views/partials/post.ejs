@@ -1,6 +1,6 @@
 <% 
-  const fullName = (locals.isMember || locals.isMyPost) ? `${post.first_name} ${post.last_name}` : "-";
-  const username = (locals.isMember || locals.isMyPost) ? post.username : "anon";
+  const fullName = (locals.isMember || locals.isMyPost) ? `${post.users.first_name} ${post.users.last_name}` : "-";
+  const username = (locals.isMember || locals.isMyPost) ? post.users.username : "anon";
   const isAnon = username === 'anon';
 %>
 

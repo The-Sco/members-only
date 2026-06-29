@@ -1,6 +1,6 @@
-const { validationResult } = require("express-validator");
-const validateNewMessage = require("../middlewares/validateNewMessage");
-const messagesDb = require("../db/queries/messagesQueries");
+import { validationResult } from "express-validator";
+import validateNewMessage from "../middlewares/validateNewMessage.js";
+import * as messagesDb from "../db/queries/messagesQueries.js";
 
 async function messagesGet(req, res, next) {
   try {
@@ -97,7 +97,7 @@ async function deleteMessagePost(req, res, next) {
   }
 }
 
-module.exports = {
+export {
   messagesGet,
   singleMessageGet,
   newMessageGet,
