@@ -1,7 +1,7 @@
-const { validationResult } = require("express-validator");
-const passport = require("passport");
-const validateSignUpForm = require("../middlewares/validateSignUp");
-const authDb = require("../db/queries/authQueries");
+import { validationResult } from "express-validator";
+import passport from "passport";
+import validateSignUpForm from "../middlewares/validateSignUp.js";
+import * as authDb from "../db/queries/authQueries.js";
 
 function sinUpGet(req, res, next) {
   try {
@@ -108,10 +108,4 @@ function logOutGet(req, res, next) {
   });
 }
 
-module.exports = {
-  sinUpGet,
-  signUpPost,
-  logInGet,
-  logInPost,
-  logOutGet,
-};
+export { sinUpGet, signUpPost, logInGet, logInPost, logOutGet };

@@ -1,4 +1,4 @@
-const joinDb = require("../db/queries/joinQueries");
+import * as joinDb from "../db/queries/joinQueries.js";
 
 function joinGet(req, res, next) {
   try {
@@ -67,7 +67,4 @@ async function joinPost(req, res, next) {
   }
 }
 
-module.exports = {
-  joinGet,
-  joinPost,
-};
+export { joinGet, joinPost };

@@ -1,7 +1,7 @@
 <%
   const isMyPost = locals.currentUser?.id === post.user_id;
-  const fullName = locals.isMember ? `${post.first_name} ${post.last_name}` : "-";
-  const username = locals.isMember ? post.username : "anon";
+  const fullName = locals.isMember ? `${post.users.first_name} ${post.users.last_name}` : "-";
+  const username = locals.isMember ? post.users.username : "anon";
 %>
 
 <!DOCTYPE html>

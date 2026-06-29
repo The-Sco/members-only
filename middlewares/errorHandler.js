@@ -10,4 +10,4 @@ const errorHandler = (err, req, res, next) => {
   res.redirect("/messages");
 };
 
-module.exports = errorHandler;
+export default errorHandler;
